@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شهادة ICDL</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #0a0a0a;
+        }
+        .certificate-container {
+            perspective: 1000px;
+            width: 800px; /* Adjust as needed */
+            height: 600px; /* Adjust as needed */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .certificate {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s ease-out;
+            transform: rotateY(0deg) rotateX(0deg);
+        }
+        .certificate img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            backface-visibility: hidden;
+            position: absolute;
+        }
+        .certificate-front {
+            transform: rotateY(0deg);
+        }
+        .certificate-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <div class="certificate">
+            <img src="images/certificate_with_stamps.png" alt="ICDL Certificate" class="certificate-front">
+            <!-- You can add a back image if needed -->
+            <!-- <img src="images/certificate_back.png" alt="ICDL Certificate Back" class="certificate-back"> -->
+        </div>
+    </div>
+
+    <script>
+        const certificate = document.querySelector(".certificate");
+        let rotationY = 0;
+        let rotationX = 0;
+
+        document.addEventListener("mousemove", (e) => {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            rotationY = (e.clientX - centerX) / 50; // Adjust sensitivity
+            rotationX = (centerY - e.clientY) / 50; // Adjust sensitivity
+
+            certificate.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
+        });
+
+        // Optional: Add a subtle automatic rotation
+        let autoRotateInterval;
+        function startAutoRotate() {
+            autoRotateInterval = setInterval(() => {
+                rotationY += 0.1; // Adjust speed
+                certificate.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
+            }, 50);
+        }
+
+        function stopAutoRotate() {
+            clearInterval(autoRotateInterval);
+        }
+
+        startAutoRotate();
+
+        certificate.addEventListener("mouseenter", stopAutoRotate);
+        certificate.addEventListener("mouseleave", startAutoRotate);
+
+    </script>
+</body>
+</html>
+
